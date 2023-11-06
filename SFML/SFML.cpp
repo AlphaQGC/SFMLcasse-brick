@@ -1,31 +1,39 @@
-// SFML.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <SFML/Graphics.hpp>
+#include <time.h>
+#include "GameObject.h"
+
 
 int main(int argc, char** argv)
 {
-    //Création d'une fenêtre
-    sf::RenderWindow oWindow(sf::VideoMode(640, 480), "SFML");
+    //Crï¿½ation d'une fenï¿½tre
+    sf::RenderWindow oWindow(sf::VideoMode(800, 800), "SFML");
 
-    //Création d'un cercle de radius 100
-    sf::CircleShape oCircle(100.f);
-    //A la position 0, 0
-    oCircle.setPosition(0.f, 0.f);
-    //Et de couleur verte
-    oCircle.setFillColor(sf::Color::Green);
+    GameObject object1(0,0, 100,100);
+    GameObject object2(700, 700, 100, 100);
+    GameObject object3(0, 700, 100, 100);
+    GameObject object4(700, 0, 100, 100);
+    GameObject object5(300, 300, 100);
 
 
-    //Création d'un rectangle de taille 50, 50
-    sf::RectangleShape oRectangle(sf::Vector2f(50.f, 50.f));
-    //A la position 100, 100
-    oCircle.setPosition(100.f, 100.f);
-    //Et de couleur rouge
-    oRectangle.setFillColor(sf::Color::Red);
+    //Uint32 start;
+    //int countDelta = 0;
 
     //GameLoop
     while (oWindow.isOpen())
     {
+
+        //Uint32 start = SDL_GetTicks();
+
+        //if (countDelta >= 20) {
+            // move something
+            //countDelta = 0;
+        //}
+
+        //Uint32 end = SDL_GetTicks();
+        //Uint32 deltaTime = end - start;
+        //countDelta += deltaTime;
+
+
         //EVENT
         sf::Event oEvent;
         while (oWindow.pollEvent(oEvent))
@@ -36,11 +44,17 @@ int main(int argc, char** argv)
 
         //UPDATE
 
+
+
         //DRAW
         oWindow.clear();
+           
+        oWindow.draw(*object1.shape);
+        oWindow.draw(*object2.shape);
+        oWindow.draw(*object3.shape);
+        oWindow.draw(*object4.shape);
+        oWindow.draw(*object5.shape);
 
-        oWindow.draw(oCircle);
-        oWindow.draw(oRectangle);
 
         oWindow.display();
     }
