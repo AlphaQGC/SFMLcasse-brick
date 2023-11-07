@@ -5,7 +5,7 @@ class GameObject
 {
 public:
 
-	int x, y, width, height, radius;
+	float x, y, width, height, radius;
 
 	sf::Shape* shape;
 
@@ -19,7 +19,7 @@ public:
 
 	void rotate(int degree);
 
-	//bool hasCollided(sf::Shape* other_shape);
+	bool hasCollided(sf::Shape* other_shape, int other_width, int other_heigth);
 
 };
 

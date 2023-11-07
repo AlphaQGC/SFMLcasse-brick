@@ -24,32 +24,35 @@ GameObject::GameObject(int x, int y, int radius) {
 }
 
 void GameObject::moveDown(float time) {
-	shape->setPosition(x, y += time * 1);
+	y += time * 20.f;
+	shape->setPosition(x, y);
 }
 
 void GameObject::moveUp(float time) {
-	shape->setPosition(x, y -= time * 1);
+	y -= time * 40.f;
+	shape->setPosition(x, y);
 }
 
 void GameObject::moveLeft(float time) {
-	shape->setPosition(x -= time * 1, y);
+	x -= time * 10.f;
+	shape->setPosition(x, y);
 }
 
 void GameObject::moveRight(float time) {
-	shape->setPosition(x += time * 1, y);
+	x += time * 10.f;
+	shape->setPosition(x, y);
 }
 
 void GameObject::rotate(int degree) {
 	shape->rotate(degree);
 }
 
-//bool GameObject::hasCollided(sf::Shape* other_shape) {
-	
-//}
-
-// collide :
-// 
-// if xmin green > xmin red && xmin green < max red || if xmax green > xmin red && xmax green < max red 
-// && ymin green > ymin red && ymin green < yax red || if ymax green > ymin red && ymax green < ymax red 
-// 
-// toujours faire la vérification sur le plus petit rectangle 
+bool GameObject::hasCollided(sf::Shape* other_shape, int other_width, int other_height) {
+	sf::Vector2f position_1 = shape->getPosition();
+	sf::Vector2f position_2 = other_shape->getPosition();
+	if(position_2.x < position_1.x + width && position_2.x + other_width > position_1.x && position_2.y < position_1.y + height && position_2.y + other_height > position_1.y) {
+		return true;
+	} else {
+		return false;
+	}
+}

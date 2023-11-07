@@ -1,20 +1,19 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <stdio.h>
+#include <iostream>
 #include <ctime>
 #include "GameObject.h"
+using namespace std;
 
 
 int main(int argc, char** argv)
-{
+{   
+    sf::Mouse mouse;
     //Cr�ation d'une fen�tre
     sf::RenderWindow oWindow(sf::VideoMode(800, 800), "SFML");
 
-    GameObject object1(0,0, 100,100);
-    GameObject object2(700, 700, 100, 100);
-    GameObject object3(0, 700, 100, 100);
-    GameObject object4(700, 0, 100, 100);
-    GameObject object5(300, 300, 100);
-
+    GameObject object2(350, 700, 100, 100);
 
     sf::Clock clock;
     float delta_time = 0;
@@ -22,10 +21,11 @@ int main(int argc, char** argv)
     //GameLoop
     while (oWindow.isOpen())
     {        
+        sf::Vector2i mouse_pos = mouse.getPosition(oWindow);
         
-        object3.moveUp(delta_time);
-
-
+        system("cls");
+        cout << "x:" << mouse_pos.x << endl;
+        cout << "y:" << mouse_pos.y << endl;
 
         //EVENT
         sf::Event oEvent;
@@ -42,11 +42,7 @@ int main(int argc, char** argv)
         //DRAW
         oWindow.clear();
            
-        oWindow.draw(*object1.shape);
         oWindow.draw(*object2.shape);
-        oWindow.draw(*object3.shape);
-        oWindow.draw(*object4.shape);
-        oWindow.draw(*object5.shape);
 
 
         oWindow.display();
