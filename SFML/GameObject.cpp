@@ -22,3 +22,19 @@ GameObject::GameObject(int x, int y, int radius) {
 	shape->setPosition(x, y);
 	shape->setFillColor(sf::Color::Blue);
 }
+
+void GameObject::moveDown() {
+	shape->setPosition(x, y += 2);
+}
+
+void GameObject::moveUp() {
+	shape->setPosition(x, y -= 2);
+}
+
+void GameObject::moveLeft() {
+	shape->setPosition(x -= 2, y);
+}
+
+void GameObject::moveRight() {
+	shape->setPosition(x += 2, y);
+}

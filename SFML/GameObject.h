@@ -12,5 +12,10 @@ public:
 	GameObject(int x, int y, int size1, int size2);
 	GameObject(int x, int y, int radius);
 
+	void moveDown();
+	void moveUp();
+	void moveLeft();
+	void moveRight();
+
 };
 

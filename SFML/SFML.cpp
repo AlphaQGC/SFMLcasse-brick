@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <time.h>
+#include <stdio.h>
+#include <ctime>
 #include "GameObject.h"
 
 
@@ -15,24 +16,25 @@ int main(int argc, char** argv)
     GameObject object5(300, 300, 100);
 
 
-    //Uint32 start;
-    //int countDelta = 0;
+    clock_t begin = clock();
 
     //GameLoop
     while (oWindow.isOpen())
     {
 
-        //Uint32 start = SDL_GetTicks();
+        clock_t end = clock();
+        
+        // can do an action each 500ms
+        if (end > begin + 250) {
 
-        //if (countDelta >= 20) {
-            // move something
-            //countDelta = 0;
-        //}
+            object1.moveDown();
 
-        //Uint32 end = SDL_GetTicks();
-        //Uint32 deltaTime = end - start;
-        //countDelta += deltaTime;
+            // see the ms
+            //unsigned long millis = (end - begin) * 1000 / CLOCKS_PER_SEC;
+            //printf("Finished in %ld ms\n", millis);
 
+            begin = clock();
+        }
 
         //EVENT
         sf::Event oEvent;
