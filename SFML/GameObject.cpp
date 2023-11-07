@@ -23,18 +23,33 @@ GameObject::GameObject(int x, int y, int radius) {
 	shape->setFillColor(sf::Color::Blue);
 }
 
-void GameObject::moveDown() {
-	shape->setPosition(x, y += 2);
+void GameObject::moveDown(float time) {
+	shape->setPosition(x, y += time * 1);
 }
 
-void GameObject::moveUp() {
-	shape->setPosition(x, y -= 2);
+void GameObject::moveUp(float time) {
+	shape->setPosition(x, y -= time * 1);
 }
 
-void GameObject::moveLeft() {
-	shape->setPosition(x -= 2, y);
+void GameObject::moveLeft(float time) {
+	shape->setPosition(x -= time * 1, y);
 }
 
-void GameObject::moveRight() {
-	shape->setPosition(x += 2, y);
+void GameObject::moveRight(float time) {
+	shape->setPosition(x += time * 1, y);
 }
+
+void GameObject::rotate(int degree) {
+	shape->rotate(degree);
+}
+
+//bool GameObject::hasCollided(sf::Shape* other_shape) {
+	
+//}
+
+// collide :
+// 
+// if xmin green > xmin red && xmin green < max red || if xmax green > xmin red && xmax green < max red 
+// && ymin green > ymin red && ymin green < yax red || if ymax green > ymin red && ymax green < ymax red 
+// 
+// toujours faire la vérification sur le plus petit rectangle 

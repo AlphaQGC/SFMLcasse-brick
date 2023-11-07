@@ -16,25 +16,16 @@ int main(int argc, char** argv)
     GameObject object5(300, 300, 100);
 
 
-    clock_t begin = clock();
+    sf::Clock clock;
+    float delta_time = 0;
 
     //GameLoop
     while (oWindow.isOpen())
-    {
-
-        clock_t end = clock();
+    {        
         
-        // can do an action each 500ms
-        if (end > begin + 250) {
+        object3.moveUp(delta_time);
 
-            object1.moveDown();
 
-            // see the ms
-            //unsigned long millis = (end - begin) * 1000 / CLOCKS_PER_SEC;
-            //printf("Finished in %ld ms\n", millis);
-
-            begin = clock();
-        }
 
         //EVENT
         sf::Event oEvent;
@@ -59,6 +50,9 @@ int main(int argc, char** argv)
 
 
         oWindow.display();
+
+        delta_time = clock.restart().asSeconds();
+
     }
 
     return 0;
