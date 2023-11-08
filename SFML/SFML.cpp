@@ -17,15 +17,19 @@ int main(int argc, char** argv)
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
 
     // init canon
-    GameObject canon_shape(500, 900, 100, 100);
+    GameObject canon_shape(500, 900, 150, 100);
     canon_shape.setOriginToCenter();
+    canon_shape.rotate(45);
 
     Canon canon_manager;
+    //
 
     Ball test_ball(500, 500, 50, 50);
 
     sf::Clock clock;
     float delta_time = 0;
+
+    bool exist_ball = false;
 
     //GameLoop
     while (window->isOpen())
@@ -49,11 +53,18 @@ int main(int argc, char** argv)
         }
 
         //EVENT
+        
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            // ...
+            exist_ball = true;
+        }
+
         sf::Event oEvent;
         while (window->pollEvent(oEvent))
         {
-            if (oEvent.type == sf::Event::Closed)
+            if (oEvent.type == sf::Event::Closed) {
                 window->close();
+            }
         }
 
         //UPDATEE
@@ -62,11 +73,12 @@ int main(int argc, char** argv)
 
         //DRAW
         window->clear();
-           
-       // window->draw(*canon_shape.shape);
-       window->draw(*test_ball.shape);
+        
+        window->draw(*canon_shape.shape);
 
-
+        if (exist_ball == true) {
+            window->draw(*test_ball.shape);
+        }
 
         window->display();
 
