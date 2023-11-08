@@ -18,6 +18,9 @@ void Canon::update(sf::Shape* shape, sf::RenderWindow* window) {
 	float opposite = mouse_pos.x - canon_origin.x;
 	float near = mouse_pos.y - canon_origin.y;
 
+	vect_x = opposite;
+	vect_y = near;
+
 	float angle = -atan(opposite / near) * 200 / 3.14;
 
 	shape->rotate(angle - init_angle);

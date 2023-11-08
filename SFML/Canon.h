@@ -8,6 +8,8 @@ public:
 
 	sf::Mouse mouse;
 	float init_angle;
+
+	float vect_x, vect_y;
 	
 	Canon();
 

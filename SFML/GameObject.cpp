@@ -6,8 +6,8 @@ GameObject::GameObject(int x, int y, int width, int height) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
-	speedX = 200;
-	speedY = 150;
+	speedX = 0;
+	speedY = 0;
 
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
 	shape->setPosition(x, y);
@@ -32,6 +32,16 @@ void GameObject::moveX(float time) {
 
 void GameObject::moveY(float time) {
 	y += time * speedY;
+	shape->setPosition(x, y);
+}
+
+void GameObject::moveDirection(float time, float vect_x, float vect_y) {
+	x += vect_x * 10;
+	y += vect_y * 10;
+	shape->setPosition(x,y);
+}
+
+void GameObject::setPositionObject(int x, int y) {
 	shape->setPosition(x, y);
 }
 

@@ -29,34 +29,28 @@ int main(int argc, char** argv)
     sf::Clock clock;
     float delta_time = 0;
 
-    bool exist_ball = false;
+    bool test = false;
+    test_ball.setPositionObject(500, 900);
 
     //GameLoop
     while (window->isOpen())
     {        
 
         canon_manager.update(canon_shape.shape, window);
-
-        test_ball.moveY(delta_time);
-        test_ball.moveX(delta_time);
-       
-        if (test_ball.windowCollidedX(window) == true)
-        {
-            cout << "X";
-            test_ball.speedX = test_ball.invertDirection(test_ball.speedX);
-        }
-
-        if (test_ball.windowCollidedY(window) == true)
-        {
-            cout << "Y";
-            test_ball.speedY = test_ball.invertDirection(test_ball.speedY);
-        }
+        
+        
+        test_ball.moveDirection(delta_time, test_ball.speedX, test_ball.speedY);
 
         //EVENT
         
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // ...
-            exist_ball = true;
+        if (test == false) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                test_ball.speedX = canon_manager.vect_x * 1;
+                test_ball.speedY = canon_manager.vect_y * 1;
+                cout << test_ball.speedX;
+                cout << test_ball.speedY;
+                test = true;
+            }
         }
 
         sf::Event oEvent;
@@ -76,9 +70,7 @@ int main(int argc, char** argv)
         
         window->draw(*canon_shape.shape);
 
-        if (exist_ball == true) {
-            window->draw(*test_ball.shape);
-        }
+        window->draw(*test_ball.shape);
 
         window->display();
 
