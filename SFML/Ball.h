@@ -10,6 +10,8 @@ public:
 	bool windowCollidedX(sf::RenderWindow* window);
 	bool windowCollidedY(sf::RenderWindow* window);
 
+	bool ballOutsideWindow(sf::RenderWindow* window);
+
 	float invertDirection(float speed);
 
 };

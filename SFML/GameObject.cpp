@@ -6,6 +6,7 @@ GameObject::GameObject(int x, int y, int width, int height) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
+	speed = 500;
 	speedX = 0;
 	speedY = 0;
 
@@ -36,8 +37,8 @@ void GameObject::moveY(float time) {
 }
 
 void GameObject::moveDirection(float time, float vect_x, float vect_y) {
-	x += vect_x * 10;
-	y += vect_y * 10;
+	x += vect_x * speed * time;
+	y += vect_y * speed * time;
 	shape->setPosition(x,y);
 }
 

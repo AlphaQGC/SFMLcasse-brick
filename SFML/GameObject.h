@@ -6,7 +6,7 @@ class GameObject
 public:
 
 	float x, y, width, height, radius;
-	float speedX, speedY;
+	float speed, speedX, speedY;
 
 	sf::Shape* shape;
 
