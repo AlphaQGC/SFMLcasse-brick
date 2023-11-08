@@ -6,6 +6,8 @@ GameObject::GameObject(int x, int y, int width, int height) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
+	speedX = 200;
+	speedY = 150;
 
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
 	shape->setPosition(x, y);
@@ -23,24 +25,18 @@ GameObject::GameObject(int x, int y, int radius) {
 	shape->setFillColor(sf::Color::Blue);
 }
 
-void GameObject::moveDown(float time) {
-	y += time * 20.f;
+void GameObject::moveX(float time) {
+	x += time * speedX;
 	shape->setPosition(x, y);
 }
 
-void GameObject::moveUp(float time) {
-	y -= time * 40.f;
+void GameObject::moveY(float time) {
+	y += time * speedY;
 	shape->setPosition(x, y);
 }
 
-void GameObject::moveLeft(float time) {
-	x -= time * 10.f;
-	shape->setPosition(x, y);
-}
-
-void GameObject::moveRight(float time) {
-	x += time * 10.f;
-	shape->setPosition(x, y);
+void GameObject::setOriginToCenter() {
+	shape->setOrigin(sf::Vector2f(shape->getLocalBounds().width, shape->getLocalBounds().height) / 2.f);
 }
 
 void GameObject::rotate(int degree) {

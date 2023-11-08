@@ -3,36 +3,57 @@
 #include <stdio.h>
 #include <iostream>
 #include <ctime>
+
 #include "GameObject.h"
+#include "Canon.h"
+#include "Ball.h"
+
 using namespace std;
 
 
 int main(int argc, char** argv)
 {   
-    sf::Mouse mouse;
     //Cr�ation d'une fen�tre
-    sf::RenderWindow oWindow(sf::VideoMode(800, 800), "SFML");
+    sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
 
-    GameObject object2(350, 700, 100, 100);
+    // init canon
+    GameObject canon_shape(500, 900, 100, 100);
+    canon_shape.setOriginToCenter();
+
+    Canon canon_manager;
+
+    Ball test_ball(500, 500, 50, 50);
 
     sf::Clock clock;
     float delta_time = 0;
 
     //GameLoop
-    while (oWindow.isOpen())
+    while (window->isOpen())
     {        
-        sf::Vector2i mouse_pos = mouse.getPosition(oWindow);
-        
-        system("cls");
-        cout << "x:" << mouse_pos.x << endl;
-        cout << "y:" << mouse_pos.y << endl;
+
+        canon_manager.update(canon_shape.shape, window);
+
+        test_ball.moveY(delta_time);
+        test_ball.moveX(delta_time);
+       
+        if (test_ball.windowCollidedX(window) == true)
+        {
+            cout << "X";
+            test_ball.speedX = test_ball.invertDirection(test_ball.speedX);
+        }
+
+        if (test_ball.windowCollidedY(window) == true)
+        {
+            cout << "Y";
+            test_ball.speedY = test_ball.invertDirection(test_ball.speedY);
+        }
 
         //EVENT
         sf::Event oEvent;
-        while (oWindow.pollEvent(oEvent))
+        while (window->pollEvent(oEvent))
         {
             if (oEvent.type == sf::Event::Closed)
-                oWindow.close();
+                window->close();
         }
 
         //UPDATEE
@@ -40,12 +61,14 @@ int main(int argc, char** argv)
 
 
         //DRAW
-        oWindow.clear();
+        window->clear();
            
-        oWindow.draw(*object2.shape);
+       // window->draw(*canon_shape.shape);
+       window->draw(*test_ball.shape);
 
 
-        oWindow.display();
+
+        window->display();
 
         delta_time = clock.restart().asSeconds();
 
