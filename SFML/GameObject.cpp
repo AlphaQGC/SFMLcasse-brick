@@ -65,3 +65,4 @@ bool GameObject::hasCollided(sf::Shape* other_shape, int other_width, int other_
 	} 
 	return false;
 }
+

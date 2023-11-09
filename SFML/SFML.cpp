@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "Canon.h"
 #include "Ball.h"
+#include "Brick.h"
 
 using namespace std;
 
@@ -25,9 +26,15 @@ int main(int argc, char** argv)
     Canon canon_manager;
     //
 
-    GameObject brick(500, 100, 150, 150);
+    Brick brick(500, 100, 150, 150);
 
     vector<Ball*> tab_balls;
+    vector<Brick*> tab_brick;
+    
+    tab_brick.push_back(new Brick(150, 100, 100, 100));
+    tab_brick.push_back(new Brick(450, 100, 100, 100));
+    tab_brick.push_back(new Brick(850, 100, 100, 100));
+
 
     sf::Clock clock;
     float delta_time = 0;
@@ -79,8 +86,17 @@ int main(int argc, char** argv)
                     tab_balls[i]->speedY = tab_balls[i]->invertDirection(tab_balls[i]->speedY);
                 }
 
-                if (tab_balls[i]->hasCollided(brick.shape, brick.width, brick.height) == true ) {        
-                    cout << "collided";
+                if (tab_brick.size() != 0) {
+                    for (int j = 0; j < tab_brick.size(); j++) {
+                        if (tab_balls[i]->hasCollided(tab_brick[j]->shape, tab_brick[j]->width, tab_brick[j]->height) == true) {
+                            // change direction
+                            tab_brick[j]->update();
+                            if (tab_brick[j]->health <= 0) {
+                                tab_brick.erase(tab_brick.begin() + j);
+                                j--;
+                            }
+                        }
+                    }
                 }
 
                 if (tab_balls[i]->ballOutsideWindow(window) == true) {
@@ -99,7 +115,12 @@ int main(int argc, char** argv)
         window->clear();
         
         window->draw(*canon_shape.shape);
-        window->draw(*brick.shape);
+
+        if (tab_brick.size() != 0) {
+            for (int i = 0; i < tab_brick.size(); i++) {
+                window->draw(*tab_brick[i]->shape);
+            }
+        }
 
         
         if (tab_balls.size() != 0) {
