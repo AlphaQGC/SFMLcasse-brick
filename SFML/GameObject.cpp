@@ -20,6 +20,9 @@ GameObject::GameObject(int x, int y, int radius) {
 	this->x = x;
 	this->y = y;
 	this->radius = radius;
+	speed = 500;
+	speedX = 0;
+	speedY = 0;
 
 	shape = new sf::CircleShape(radius);
 	shape->setPosition(x, y);
@@ -59,7 +62,6 @@ bool GameObject::hasCollided(sf::Shape* other_shape, int other_width, int other_
 	sf::Vector2f position_2 = other_shape->getPosition();
 	if(position_2.x < position_1.x + width && position_2.x + other_width > position_1.x && position_2.y < position_1.y + height && position_2.y + other_height > position_1.y) {
 		return true;
-	} else {
-		return false;
-	}
+	} 
+	return false;
 }

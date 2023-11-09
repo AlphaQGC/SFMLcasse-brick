@@ -25,6 +25,8 @@ int main(int argc, char** argv)
     Canon canon_manager;
     //
 
+    GameObject brick(500, 100, 150, 150);
+
     vector<Ball*> tab_balls;
 
     sf::Clock clock;
@@ -50,14 +52,14 @@ int main(int argc, char** argv)
                 switch(oEvent.mouseButton.button){
                 case sf::Mouse::Left:
 
-                    tab_balls.push_back(new Ball(475, 900, 50, 50));
+                    if (tab_balls.size() == 0) {
+                        tab_balls.push_back(new Ball(490, 900, 20));
 
-                    float norme = sqrt(pow(canon_manager.vect_x, 2) + pow(canon_manager.vect_y, 2));
+                        float norme = sqrt(pow(canon_manager.vect_x, 2) + pow(canon_manager.vect_y, 2));
 
-                    tab_balls[tab_balls.size() - 1]->speedX = canon_manager.vect_x / norme;
-                    tab_balls[tab_balls.size() - 1]->speedY = canon_manager.vect_y / norme;
-
-
+                        tab_balls[tab_balls.size() - 1]->speedX = canon_manager.vect_x / norme;
+                        tab_balls[tab_balls.size() - 1]->speedY = canon_manager.vect_y / norme;
+                    }
                 }
             }
         }
@@ -77,6 +79,9 @@ int main(int argc, char** argv)
                     tab_balls[i]->speedY = tab_balls[i]->invertDirection(tab_balls[i]->speedY);
                 }
 
+                if (tab_balls[i]->hasCollided(brick.shape, brick.width, brick.height) == true ) {        
+                    cout << "collided";
+                }
 
                 if (tab_balls[i]->ballOutsideWindow(window) == true) {
                     tab_balls.erase(tab_balls.begin() + i);
@@ -84,6 +89,7 @@ int main(int argc, char** argv)
                 }
             }
         }
+
 
         //UPDATEE
 
@@ -93,6 +99,8 @@ int main(int argc, char** argv)
         window->clear();
         
         window->draw(*canon_shape.shape);
+        window->draw(*brick.shape);
+
         
         if (tab_balls.size() != 0) {
             for (int i = 0; i < tab_balls.size(); i++) {
