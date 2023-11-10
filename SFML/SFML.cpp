@@ -76,6 +76,7 @@ int main(int argc, char** argv)
 
         if (tab_balls.size() !=0) {
             for (int i = 0; i < tab_balls.size(); i++) {
+
                 tab_balls[i]->moveDirection(delta_time, tab_balls[i]->speedX, tab_balls[i]->speedY);
 
                 if (tab_balls[i]->windowCollidedX(window)) {
@@ -88,9 +89,19 @@ int main(int argc, char** argv)
 
                 if (tab_brick.size() != 0) {
                     for (int j = 0; j < tab_brick.size(); j++) {
+
                         if (tab_balls[i]->hasCollided(tab_brick[j]->shape, tab_brick[j]->width, tab_brick[j]->height) == true) {
-                            // change direction
+
+                            if (tab_balls[i]->checkCollisionX(tab_brick[j]->shape, tab_brick[j]->height) == true) {
+                                tab_balls[i]->speedX = tab_balls[i]->invertDirection(tab_balls[i]->speedX);
+                            }
+
+                            if (tab_balls[i]->checkCollisionY(tab_brick[j]->shape, tab_brick[j]->height) == true) {
+                                tab_balls[i]->speedY = tab_balls[i]->invertDirection(tab_balls[i]->speedY);
+                            }
+
                             tab_brick[j]->update();
+
                             if (tab_brick[j]->health <= 0) {
                                 tab_brick.erase(tab_brick.begin() + j);
                                 j--;

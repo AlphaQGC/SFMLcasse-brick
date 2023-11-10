@@ -24,5 +24,8 @@ public:
 
 	bool hasCollided(sf::Shape* other_shape, int other_width, int other_heigth);
 
+	bool checkCollisionX(sf::Shape* brick, int brick_width);
+	bool checkCollisionY(sf::Shape* brick, int brick_height);
+
 };
 

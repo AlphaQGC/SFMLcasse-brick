@@ -66,3 +66,22 @@ bool GameObject::hasCollided(sf::Shape* other_shape, int other_width, int other_
 	return false;
 }
 
+bool GameObject::checkCollisionX(sf::Shape* brick, int brick_width) {
+	float ballRight = shape->getPosition().x + radius * 2;
+	float ballLeft = shape->getPosition().x;
+	float brickRight = brick->getPosition().x + brick_width;
+	float brickLeft = brick->getPosition().x;
+
+	return (ballLeft >= brickLeft and ballLeft <= brickRight) or (ballRight >= brickLeft and ballRight <= brickRight);
+}
+
+bool GameObject::checkCollisionY(sf::Shape* brick, int brick_height) {
+	float ballBottom = shape->getPosition().y + radius * 2;
+	float ballTop = shape->getPosition().y;
+	float brickBottom = brick->getPosition().y + brick_height;
+	float brickTop = brick->getPosition().y;
+
+	return (ballTop >= brickTop and ballTop <= brickBottom) or (ballBottom >= brickTop and ballBottom <= brickBottom);
+}
+
+
