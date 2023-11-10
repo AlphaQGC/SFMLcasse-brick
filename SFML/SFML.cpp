@@ -17,6 +17,9 @@ int main(int argc, char** argv)
 {   
     //Cr�ation d'une fen�tre
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
+   
+    sf::Mouse mouse;
+
 
     // init canon
     GameObject canon_shape(500, 900, 150, 100);
@@ -77,7 +80,11 @@ int main(int argc, char** argv)
         if (tab_balls.size() !=0) {
             for (int i = 0; i < tab_balls.size(); i++) {
 
-                tab_balls[i]->moveDirection(delta_time, tab_balls[i]->speedX, tab_balls[i]->speedY);
+                sf::Vector2i mouse_postest = mouse.getPosition(*window);
+
+                tab_balls[i]->setPositionObject(mouse_postest.x, mouse_postest.y);
+
+                //tab_balls[i]->moveDirection(delta_time, tab_balls[i]->speedX, tab_balls[i]->speedY);
 
                 if (tab_balls[i]->windowCollidedX(window)) {
                     tab_balls[i]->speedX = tab_balls[i]->invertDirection(tab_balls[i]->speedX);
@@ -93,18 +100,20 @@ int main(int argc, char** argv)
                         if (tab_balls[i]->hasCollided(tab_brick[j]->shape, tab_brick[j]->width, tab_brick[j]->height) == true) {
 
                             if (tab_balls[i]->checkCollisionX(tab_brick[j]->shape, tab_brick[j]->height) == true) {
+                                cout << "X";
                                 tab_balls[i]->speedX = tab_balls[i]->invertDirection(tab_balls[i]->speedX);
                             }
 
                             if (tab_balls[i]->checkCollisionY(tab_brick[j]->shape, tab_brick[j]->height) == true) {
+                                cout << "Y";
                                 tab_balls[i]->speedY = tab_balls[i]->invertDirection(tab_balls[i]->speedY);
                             }
 
                             tab_brick[j]->update();
 
                             if (tab_brick[j]->health <= 0) {
-                                tab_brick.erase(tab_brick.begin() + j);
-                                j--;
+                                //tab_brick.erase(tab_brick.begin() + j);
+                                //j--;
                             }
                         }
                     }
