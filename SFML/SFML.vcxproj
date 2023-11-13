@@ -134,6 +134,8 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Canon.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="LevelCreater.cpp" />
     <ClCompile Include="SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +143,8 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Canon.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="LevelCreater.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

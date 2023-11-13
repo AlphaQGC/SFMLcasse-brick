@@ -21,11 +21,14 @@ public:
 	void setPositionObject(int x, int y);
 	void setOriginToCenter();
 	void rotate(int degree);
+	
+	float getMinimumDistance(float distance1, float distance2, float distance3, float distance4);
+
+	bool isInside(float coord, float coord_min, float coord_max);
 
 	bool hasCollided(sf::Shape* other_shape, int other_width, int other_heigth);
 
-	bool checkCollisionX(sf::Shape* brick, int brick_width);
-	bool checkCollisionY(sf::Shape* brick, int brick_height);
+	sf::Vector2f newBounceDirection(sf::Shape* other_shape, int other_width, int other_height);
 
 };
 

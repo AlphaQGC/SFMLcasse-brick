@@ -1,5 +1,7 @@
 #include "GameObject.h"
+#include <list>
 #include <SFML/Graphics.hpp>
+using namespace std;
 
 GameObject::GameObject(int x, int y, int width, int height) {
 	this->x = x;
@@ -57,31 +59,61 @@ void GameObject::rotate(int degree) {
 	shape->rotate(degree);
 }
 
+float GameObject::getMinimumDistance(float distance1, float distance2, float distance3, float distance4) {
+	float min = distance1;
+	list<float> distance_list{distance2, distance3, distance4};
+	while(distance_list.empty() == false) {
+		if (distance_list.front() < min) {
+			min = distance_list.front();
+		}
+		distance_list.pop_front();
+	}
+	return min;
+}
+
+bool GameObject::isInside(float coord, float coord_min, float coord_max) {
+	if (coord > coord_min && coord < coord_max) {
+		return true;
+	}
+	return false;
+
+}
+
 bool GameObject::hasCollided(sf::Shape* other_shape, int other_width, int other_height) {
 	sf::Vector2f position_1 = shape->getPosition();
 	sf::Vector2f position_2 = other_shape->getPosition();
-	if(position_2.x < position_1.x + width && position_2.x + other_width > position_1.x && position_2.y < position_1.y + height && position_2.y + other_height > position_1.y) {
+
+	if(( isInside(position_1.x, position_2.x, position_2.x + other_width) || 
+		isInside(position_1.x + radius * 2, position_2.x, position_2.x + other_width)) &&
+		(isInside(position_1.y, position_2.y, position_2.y + other_height) || 
+		isInside(position_1.y + radius * 2, position_2.y, position_2.y + other_height))){
 		return true;
 	} 
 	return false;
 }
 
-bool GameObject::checkCollisionX(sf::Shape* brick, int brick_width) {
-	float ballRight = shape->getPosition().x + radius * 2;
-	float ballLeft = shape->getPosition().x;
-	float brickRight = brick->getPosition().x + brick_width;
-	float brickLeft = brick->getPosition().x;
 
-	return (ballLeft >= brickLeft and ballLeft <= brickRight) or (ballRight >= brickLeft and ballRight <= brickRight);
-}
+sf::Vector2f GameObject::newBounceDirection(sf::Shape* other_shape, int other_width, int other_height) {
+	sf::Vector2f newVect;
+	newVect.x = 1;
+	newVect.y = 1;
 
-bool GameObject::checkCollisionY(sf::Shape* brick, int brick_height) {
-	float ballBottom = shape->getPosition().y + radius * 2;
-	float ballTop = shape->getPosition().y;
-	float brickBottom = brick->getPosition().y + brick_height;
-	float brickTop = brick->getPosition().y;
+	float top = abs((shape->getPosition().y + radius * 2) - other_shape->getPosition().y);
+	float bottom = abs(shape->getPosition().y - (other_shape->getPosition().y + other_height));
+	float left = abs((shape->getPosition().x + radius * 2) - other_shape->getPosition().x);
+	float right = abs(shape->getPosition().x - (other_shape->getPosition().x + other_width));
 
-	return (ballTop >= brickTop and ballTop <= brickBottom) or (ballBottom >= brickTop and ballBottom <= brickBottom);
+	float min_distance = getMinimumDistance(top, bottom, left, right);
+
+	if (min_distance == top or min_distance == bottom) {
+		newVect.y = -1;
+	}
+
+	if (min_distance == left or min_distance == right) {
+		newVect.x = -1;
+	}
+
+	return newVect;
 }
 
 
