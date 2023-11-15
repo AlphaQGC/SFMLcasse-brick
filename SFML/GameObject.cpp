@@ -31,17 +31,13 @@ GameObject::GameObject(int x, int y, int radius) {
 	shape->setFillColor(sf::Color::Blue);
 }
 
-void GameObject::moveX(float time) {
-	x += time * speedX;
-	shape->setPosition(x, y);
+int GameObject::random(int max_number_chance) {
+	int randomnumber;
+	randomnumber = rand() % max_number_chance;
+	return(randomnumber);
 }
 
-void GameObject::moveY(float time) {
-	y += time * speedY;
-	shape->setPosition(x, y);
-}
-
-void GameObject::moveDirection(float time, float vect_x, float vect_y) {
+void GameObject::moveDirection(float time, float vect_x, float vect_y, float speed) {
 	x += vect_x * speed * time;
 	y += vect_y * speed * time;
 	shape->setPosition(x,y);

@@ -13,10 +13,9 @@ public:
 	GameObject(int x, int y, int size1, int size2);
 	GameObject(int x, int y, int radius);
 
-	void moveY(float time);
-	void moveX(float time);
+	int random(int max_number_chance);
 
-	void moveDirection(float time, float vect_x, float vect_y);
+	void moveDirection(float time, float vect_x, float vect_y, float speed);
 
 	void setPositionObject(int x, int y);
 	void setOriginToCenter();

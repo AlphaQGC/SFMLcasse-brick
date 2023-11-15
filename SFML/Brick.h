@@ -10,6 +10,8 @@ public:
 	Brick(int x, int y, int size1, int size2);
 
 	void update();
+
+	bool dropBonus();
 };
 
 
