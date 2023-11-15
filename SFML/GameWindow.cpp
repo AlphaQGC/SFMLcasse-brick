@@ -20,7 +20,7 @@ int GameWindow::game() {
     sprite.setTexture(background);
     sprite.setTextureRect(sf::IntRect(0, 0, 100, 100));
     sprite.setPosition(100, 100);
-    //
+    ///
 
     // init canon
     GameObject canon_shape(500, 900, 150, 100);
