@@ -28,7 +28,7 @@ int GameWindow::game() {
     canon_shape.rotate(45);
 
     Canon canon_manager;
-    //
+    ///
 
     // balls
     vector<Ball*> tab_balls;
