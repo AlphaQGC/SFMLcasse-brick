@@ -1,13 +1,12 @@
 #include "Brick.h"
 
-Brick::Brick(int x, int y, int size1, int size2) : GameObject(x, y, size1, size2) {
+Brick::Brick(int x, int y, int width, int height, const char* img) : GameObject(x, y, width, height, img) {
 
-	int health = 2;
-
+	health = 2;
 }
 
 void Brick::update() {
-	health--;
+	health -= 1;
 }
 
 bool Brick::dropBonus() {

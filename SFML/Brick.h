@@ -6,8 +6,9 @@ class Brick : public GameObject
 public:
 
 	int health;
+	const char* img_bonus = "img/bonus.png";
 
-	Brick(int x, int y, int size1, int size2);
+	Brick(int x, int y, int width, int height, const char* img);
 
 	void update();
 

@@ -1,10 +1,6 @@
 #include "Ball.h"
 
-Ball::Ball(int x, int y, int size1, int size2) : GameObject(x, y, size1, size2) {
-	
-}
-
-Ball::Ball(int x, int y, int size1) : GameObject(x, y, size1) {
+Ball::Ball(int x, int y, int size1, const char* img) : GameObject(x, y, size1, img) {
 
 }
 

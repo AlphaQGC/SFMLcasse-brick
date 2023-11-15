@@ -12,18 +12,16 @@ int GameWindow::game() {
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
 
     //
-    sf::Texture background;
-    if (!background.loadFromFile("img/dog.jpg"))
-        cout << "image not loaded";
-
-    sf::Sprite sprite;
-    sprite.setTexture(background);
-    sprite.setTextureRect(sf::IntRect(0, 0, 100, 100));
-    sprite.setPosition(100, 100);
+   /* sf::Texture background_texture;
+    background_texture.loadFromFile("img/background.png");
+    sf::Sprite background;
+    background.setTexture(background_texture);
+    background.setPosition(0, 0);*/
     //
 
     // init canon
-    GameObject canon_shape(500, 900, 150, 100);
+    const char* img_canon = "img/canon.png";
+    GameObject canon_shape(500, 900, 150, 100, img_canon);
     canon_shape.setOriginToCenter();
     canon_shape.rotate(45);
 
@@ -32,6 +30,7 @@ int GameWindow::game() {
 
     // balls
     vector<Ball*> tab_balls;
+    const char* img_ball = "img/ball.png";
     //
 
     // grid
@@ -70,7 +69,7 @@ int GameWindow::game() {
                 case sf::Mouse::Left:
 
                     if (tab_balls.size() < limit_ball) {
-                        tab_balls.push_back(new Ball(490, 900, 10));
+                        tab_balls.push_back(new Ball(490, 900, 10, img_ball));
 
                         float norme = sqrt(pow(canon_manager.vect_x, 2) + pow(canon_manager.vect_y, 2));
 
@@ -117,11 +116,13 @@ int GameWindow::game() {
 
                                 already_collided = true;
                             }
+
                             tab_brick[j]->update();
+
 
                             if (tab_brick[j]->health <= 0) {
                                 if (tab_brick[j]->dropBonus() == true) {
-                                    tab_bonus.push_back(new Bonus(tab_brick[j]->x + tab_brick[j]->width / 2, tab_brick[j]->y + tab_brick[j]->height / 2, 20, 20));
+                                    tab_bonus.push_back(new Bonus(tab_brick[j]->x + tab_brick[j]->width / 2, tab_brick[j]->y + tab_brick[j]->height / 2, 20, 20, tab_brick[j]->img_bonus));
                                 }
                                 tab_brick.erase(tab_brick.begin() + j);
                                 j--;
@@ -178,9 +179,8 @@ int GameWindow::game() {
             }
         }
 
-        //
-        window->draw(sprite);
-        //
+        window->draw(*canon_shape.shape);
+
 
         window->display();
 

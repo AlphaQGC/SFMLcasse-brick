@@ -1,7 +1,28 @@
 #include "GameObject.h"
 #include <list>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 using namespace std;
+
+
+GameObject::GameObject(int x, int y, int width, int height, const char* img) {
+	this->x = x;
+	this->y = y;
+	this->width = width;
+	this->height = height;
+	speed = 500;
+	speedX = 0;
+	speedY = 0;
+	
+	sf::Texture* texture = new sf::Texture;
+	if (!texture->loadFromFile(img)) {
+		cout << "failed to load image";
+	}
+
+	shape = new sf::RectangleShape(sf::Vector2f(width, height));
+	shape->setPosition(x, y);
+	shape->setTexture(texture);
+}
 
 GameObject::GameObject(int x, int y, int width, int height) {
 	this->x = x;
@@ -15,6 +36,26 @@ GameObject::GameObject(int x, int y, int width, int height) {
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
 	shape->setPosition(x, y);
 	shape->setFillColor(sf::Color::Red);
+}
+
+
+GameObject::GameObject(int x, int y, int radius, const char* img) {
+	this->x = x;
+	this->y = y;
+	this->radius = radius;
+	speed = 500;
+	speedX = 0;
+	speedY = 0;
+
+	sf::Texture* texture = new sf::Texture;
+	if (!texture->loadFromFile(img)) {
+		cout << "failed to load image";
+	}
+
+
+	shape = new sf::CircleShape(radius);
+	shape->setPosition(x, y);
+	shape->setTexture(texture);
 }
 
 
