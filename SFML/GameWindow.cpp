@@ -12,11 +12,12 @@ int GameWindow::game() {
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
 
     //
-   /* sf::Texture background_texture;
+    sf::Texture background_texture;
     background_texture.loadFromFile("img/background.png");
     sf::Sprite background;
     background.setTexture(background_texture);
-    background.setPosition(0, 0);*/
+    background.setPosition(-100, -100);
+    background.setScale(1.5, 1.5);
     //
 
     // init canon
@@ -157,7 +158,7 @@ int GameWindow::game() {
         //DRAW
         window->clear();
 
-        window->draw(*canon_shape.shape);
+        window->draw(background);
 
         if (tab_brick.size() != 0) {
             for (int i = 0; i < tab_brick.size(); i++) {
