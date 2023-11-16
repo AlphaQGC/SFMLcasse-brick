@@ -1,8 +1,8 @@
 #include "Brick.h"
 
-Brick::Brick(int x, int y, int width, int height, const char* img) : GameObject(x, y, width, height, img) {
+Brick::Brick(int x, int y, int width, int height, const char* img, int health) : GameObject(x, y, width, height, img) {
 
-	health = 2;
+	this->health = health;
 }
 
 void Brick::update() {

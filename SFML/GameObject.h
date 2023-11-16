@@ -6,7 +6,8 @@ class GameObject
 public:
 
 	float x, y, width, height, radius;
-	float speed, speedX, speedY;
+	float speed, vectX, vectY;
+	const char* img;
 
 	sf::Shape* shape;
 

@@ -11,7 +11,7 @@ int GameWindow::game() {
     //Cr�ation d'une fen�tre
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML");
 
-    //
+    // init board
     sf::Texture background_texture;
     background_texture.loadFromFile("img/background.png");
     sf::Sprite background;
@@ -20,6 +20,15 @@ int GameWindow::game() {
     background.setScale(1.5, 1.5);
     //
 
+    //
+    sf::Texture ball_bonus_texture;
+    ball_bonus_texture.loadFromFile("img/ball_bonus.png");
+    sf::Sprite ball_bonus;
+    ball_bonus.setTexture(ball_bonus_texture);
+    ball_bonus.setPosition(800, 900);
+    ball_bonus.setScale(1.5, 1.5);
+    // 
+    
     // init canon
     const char* img_canon = "img/canon.png";
     GameObject canon_shape(500, 900, 150, 100, img_canon);
@@ -37,13 +46,13 @@ int GameWindow::game() {
     // grid
     LevelCreater level;
     vector<Brick*> tab_brick;
-    tab_brick = level.loadTable();
+    vector<Brick*> tab_wall;
+    int count_level = 0;
     //
     
     // bonus
     vector<Bonus*> tab_bonus;
     //
-
 
     sf::Clock clock;
     float delta_time = 0;
@@ -57,6 +66,13 @@ int GameWindow::game() {
 
         //EVENT
 
+        if (tab_brick.size() == 0) {
+            if (count_level < 4) {
+                count_level += 1;
+                tab_balls.clear();
+                tab_brick = level.loadTable(count_level);
+            }
+        }
 
         sf::Event oEvent;
         while (window->pollEvent(oEvent))
@@ -74,8 +90,8 @@ int GameWindow::game() {
 
                         float norme = sqrt(pow(canon_manager.vect_x, 2) + pow(canon_manager.vect_y, 2));
 
-                        tab_balls[tab_balls.size() - 1]->speedX = canon_manager.vect_x / norme;
-                        tab_balls[tab_balls.size() - 1]->speedY = canon_manager.vect_y / norme;
+                        tab_balls[tab_balls.size() - 1]->vectX = canon_manager.vect_x / norme;
+                        tab_balls[tab_balls.size() - 1]->vectY = canon_manager.vect_y / norme;
                     }
                 }
             }
@@ -90,14 +106,25 @@ int GameWindow::game() {
 
         for (int i = 0; i < tab_balls.size(); i++) {
 
-                tab_balls[i]->moveDirection(delta_time, tab_balls[i]->speedX, tab_balls[i]->speedY, tab_balls[i]->speed);
+                tab_balls[i]->moveDirection(delta_time, tab_balls[i]->vectX, tab_balls[i]->vectY, tab_balls[i]->speed);
 
-                if (tab_balls[i]->windowCollidedX(window)) {
-                    tab_balls[i]->speedX = tab_balls[i]->invertDirection(tab_balls[i]->speedX);
-                }
+                switch(tab_balls[i]->windowCollided(window)) {
 
-                if (tab_balls[i]->windowCollidedY(window)) {
-                    tab_balls[i]->speedY = tab_balls[i]->invertDirection(tab_balls[i]->speedY);
+                    case 1 :
+                        tab_balls[i]->vectY = abs(tab_balls[i]->vectY);
+                        break;
+
+                    case 2:
+                        tab_balls[i]->vectX = abs(tab_balls[i]->vectX) * -1;
+                        break;
+
+                    case 3:
+                        tab_balls[i]->vectX = abs(tab_balls[i]->vectX);
+                        break;
+                    
+                    case 0:
+                        break;
+
                 }
 
 
@@ -112,14 +139,13 @@ int GameWindow::game() {
                             if (already_collided == false) {
 
                                 sf::Vector2f newVect = tab_balls[i]->newBounceDirection(tab_brick[j]->shape, tab_brick[j]->width, tab_brick[j]->height);
-                                tab_balls[i]->speedX = newVect.x * tab_balls[i]->speedX;
-                                tab_balls[i]->speedY = newVect.y * tab_balls[i]->speedY;
+                                tab_balls[i]->vectX = newVect.x * tab_balls[i]->vectX;
+                                tab_balls[i]->vectY = newVect.y * tab_balls[i]->vectY;
 
                                 already_collided = true;
                             }
 
                             tab_brick[j]->update();
-
 
                             if (tab_brick[j]->health <= 0) {
                                 if (tab_brick[j]->dropBonus() == true) {
@@ -136,7 +162,7 @@ int GameWindow::game() {
                     for (int j = 0; j < tab_bonus.size(); j++) {
 
                         if (tab_balls[i]->hasCollided(tab_bonus[j]->shape, tab_bonus[j]->width, tab_bonus[j]->height) == true) {
-                            limit_ball = 5;
+                            limit_ball = 100;
                             tab_bonus.erase(tab_bonus.begin() + j);
                             j--;
                         } else if (tab_bonus[j]->y < 0) {
@@ -160,9 +186,19 @@ int GameWindow::game() {
 
         window->draw(background);
 
+        if (limit_ball == 100) {
+            window->draw(ball_bonus);
+        }
+
         if (tab_brick.size() != 0) {
             for (int i = 0; i < tab_brick.size(); i++) {
                 window->draw(*tab_brick[i]->shape);
+            }
+        }
+
+        if (tab_wall.size() != 0) {
+            for (int i = 0; i < tab_wall.size(); i++) {
+                window->draw(*tab_wall[i]->shape);
             }
         }
 

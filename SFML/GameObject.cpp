@@ -10,9 +10,10 @@ GameObject::GameObject(int x, int y, int width, int height, const char* img) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
+	this->img = img;
 	speed = 500;
-	speedX = 0;
-	speedY = 0;
+	vectX = 0;
+	vectY = 0;
 	
 	sf::Texture* texture = new sf::Texture;
 	if (!texture->loadFromFile(img)) {
@@ -30,8 +31,8 @@ GameObject::GameObject(int x, int y, int width, int height) {
 	this->width = width;
 	this->height = height;
 	speed = 500;
-	speedX = 0;
-	speedY = 0;
+	vectX = 0;
+	vectY = 0;
 
 	shape = new sf::RectangleShape(sf::Vector2f(width, height));
 	shape->setPosition(x, y);
@@ -43,9 +44,10 @@ GameObject::GameObject(int x, int y, int radius, const char* img) {
 	this->x = x;
 	this->y = y;
 	this->radius = radius;
-	speed = 500;
-	speedX = 0;
-	speedY = 0;
+	this->img = img;
+	speed = 2000;
+	vectX = 0;
+	vectY = 0;
 
 	sf::Texture* texture = new sf::Texture;
 	if (!texture->loadFromFile(img)) {
@@ -64,8 +66,8 @@ GameObject::GameObject(int x, int y, int radius) {
 	this->y = y;
 	this->radius = radius;
 	speed = 500;
-	speedX = 0;
-	speedY = 0;
+	vectX = 0;
+	vectY = 0;
 
 	shape = new sf::CircleShape(radius);
 	shape->setPosition(x, y);
