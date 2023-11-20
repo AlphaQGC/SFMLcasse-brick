@@ -7,9 +7,7 @@ public:
 
 	Ball(int x, int y, int size1, const char* img);
 
-	int windowCollided(sf::RenderWindow* window);
-
-	bool ballOutsideWindow(sf::RenderWindow* window);
+	bool windowCollided(sf::RenderWindow* window);
 
 	float invertDirection(float speed);
 

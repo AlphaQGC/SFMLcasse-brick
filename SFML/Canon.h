@@ -6,14 +6,13 @@ class Canon
 {
 public:
 
-	sf::Mouse mouse;
 	float init_angle;
 
 	float vect_x, vect_y;
 	
 	Canon();
 
-	void update(sf::Shape* shape, sf::RenderWindow* window);
+	void getVect(sf::Shape* shape, sf::RenderWindow* window, sf::Shape* other_shape);
 
 };
 
